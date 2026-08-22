@@ -10,7 +10,7 @@ app.get("/health", (req, res) => {
 	});
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signin", (req, res) => {
 	const { email, password } = req.body;
 
 	if (!email || !password) {
