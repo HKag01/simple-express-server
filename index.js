@@ -19,11 +19,10 @@ app.post("/signin", (req, res) => {
 		});
 	}
 
-	// Simple signin logic - in a real app, you'd validate against a database
-	res.json({
-		message: "Sign in successful",
+	res.status(201).json({
+		message: "User signed up successfully",
 		user: {
-			email,
+			email: email,
 		},
 	});
 });
