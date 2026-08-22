@@ -10,4 +10,22 @@ app.get("/health", (req, res) => {
 	});
 });
 
+app.post("/signin", (req, res) => {
+	const { email, password } = req.body;
+
+	if (!email || !password) {
+		return res.status(400).json({
+			error: "Email and password are required",
+		});
+	}
+
+	// Simple signin logic - in a real app, you'd validate against a database
+	res.json({
+		message: "Sign in successful",
+		user: {
+			email,
+		},
+	});
+});
+
 app.listen(4003);
