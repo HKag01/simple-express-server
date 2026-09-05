@@ -1,13 +1,39 @@
-import express from "express";
+import express, { Request, Response } from "express";
 
 const app = express();
 const startTime = Date.now();
 
 app.use(express.json());
 
-app.get("/health", (req, res) => {
+interface HealthResponse {
+	status: string;
+	timestamp: string;
+	uptime: number;
+	checks: {
+		server: string;
+	};
+}
+
+interface SignupRequest {
+	email?: string;
+	password?: string;
+	firstName?: string;
+	lastName?: string;
+}
+
+interface SignupResponse {
+	status: string;
+	message: string;
+	data?: {
+		email: string;
+		firstName: string;
+		lastName: string;
+	};
+}
+
+app.get("/health", (req: Request, res: Response<HealthResponse>) => {
 	const uptime = Math.floor((Date.now() - startTime) / 1000);
-	
+
 	res.status(200).json({
 		status: "UP",
 		timestamp: new Date().toISOString(),
@@ -18,7 +44,7 @@ app.get("/health", (req, res) => {
 	});
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signup", (req: Request<{}, {}, SignupRequest>, res: Response<SignupResponse>) => {
 	const { email, password, firstName, lastName } = req.body;
 
 	// Validate required fields
